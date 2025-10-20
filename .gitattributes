@@ -1,0 +1,18 @@
+# Блокировка чувствительных файлов от попадания в Git
+# Эти файлы НИКОГДА не должны попасть в репозиторий
+
+credentials.json filter=secret
+*credentials*.json filter=secret
+!example-credentials.json
+
+token.json filter=secret
+token.pickle filter=secret
+
+.env filter=secret
+.env.* filter=secret
+!.env.example
+
+*.pem filter=secret
+*.key filter=secret
+*.p12 filter=secret
+

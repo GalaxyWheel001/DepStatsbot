@@ -1,0 +1,50 @@
+═══════════════════════════════════════════════════════════════════════
+ССЫЛКИ ДЛЯ ПОЛУЧЕНИЯ GOOGLE SHEETS КЛЮЧА
+═══════════════════════════════════════════════════════════════════════
+
+Открывайте по порядку и следуйте инструкциям:
+
+
+1. GOOGLE CLOUD CONSOLE (создать/выбрать проект):
+
+https://console.cloud.google.com/
+
+
+2. ВКЛЮЧИТЬ GOOGLE SHEETS API:
+
+https://console.cloud.google.com/apis/library/sheets.googleapis.com
+
+→ Нажмите "ВКЛЮЧИТЬ"
+
+
+3. ВКЛЮЧИТЬ GOOGLE DRIVE API:
+
+https://console.cloud.google.com/apis/library/drive.googleapis.com
+
+→ Нажмите "ВКЛЮЧИТЬ"
+
+
+4. СОЗДАТЬ SERVICE ACCOUNT:
+
+https://console.cloud.google.com/iam-admin/serviceaccounts
+
+→ Нажмите "+ СОЗДАТЬ СЕРВИСНЫЙ АККАУНТ"
+→ Название: bot-sheets-service
+→ Роль: Редактор
+→ Создать ключ типа JSON
+→ Скачанный файл переименуйте в credentials.json
+
+
+5. СОЗДАТЬ GOOGLE ТАБЛИЦУ:
+
+https://docs.google.com/spreadsheets/create
+
+→ После создания добавьте service account email в доступ
+
+
+═══════════════════════════════════════════════════════════════════════
+
+ПОДРОБНАЯ ИНСТРУКЦИЯ: смотрите ПОЛУЧИТЬ_КЛЮЧ_БЫСТРО.txt
+
+═══════════════════════════════════════════════════════════════════════
+

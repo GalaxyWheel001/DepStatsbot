@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets API - Ссылки</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .step-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .link-box {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .link {
+            color: #667eea;
+            text-decoration: none;
+            word-break: break-all;
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+            white-space: nowrap;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: #5568d3;
+        }
+        .copy-btn:active {
+            background: #4556b8;
+        }
+        .copied {
+            background: #28a745 !important;
+        }
+        .instruction {
+            color: #666;
+            font-size: 14px;
+            margin-top: 8px;
+            padding-left: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔑 Получение Google Sheets API ключа</h1>
+        
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                <span class="emoji">☁️</span>
+                Google Cloud Console
+            </div>
+            <div class="link-box">
+                <a href="https://console.cloud.google.com/" target="_blank" class="link" id="link1">https://console.cloud.google.com/</a>
+                <button class="copy-btn" onclick="copyLink('link1', this)">Копировать</button>
+            </div>
+            <div class="instruction">→ Создайте новый проект или выберите существующий</div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                <span class="emoji">📊</span>
+                Включить Google Sheets API
+            </div>
+            <div class="link-box">
+                <a href="https://console.cloud.google.com/apis/library/sheets.googleapis.com" target="_blank" class="link" id="link2">https://console.cloud.google.com/apis/library/sheets.googleapis.com</a>
+                <button class="copy-btn" onclick="copyLink('link2', this)">Копировать</button>
+            </div>
+            <div class="instruction">→ Нажмите кнопку "ВКЛЮЧИТЬ" (синяя кнопка)</div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                <span class="emoji">💾</span>
+                Включить Google Drive API
+            </div>
+            <div class="link-box">
+                <a href="https://console.cloud.google.com/apis/library/drive.googleapis.com" target="_blank" class="link" id="link3">https://console.cloud.google.com/apis/library/drive.googleapis.com</a>
+                <button class="copy-btn" onclick="copyLink('link3', this)">Копировать</button>
+            </div>
+            <div class="instruction">→ Нажмите кнопку "ВКЛЮЧИТЬ" (синяя кнопка)</div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">4</span>
+                <span class="emoji">🔐</span>
+                Создать Service Account
+            </div>
+            <div class="link-box">
+                <a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" class="link" id="link4">https://console.cloud.google.com/iam-admin/serviceaccounts</a>
+                <button class="copy-btn" onclick="copyLink('link4', this)">Копировать</button>
+            </div>
+            <div class="instruction">
+                → Нажмите "+ СОЗДАТЬ СЕРВИСНЫЙ АККАУНТ"<br>
+                → Название: <strong>bot-sheets-service</strong><br>
+                → Роль: <strong>Редактор</strong><br>
+                → Создать ключ типа <strong>JSON</strong><br>
+                → Скачанный файл переименуйте в <strong>credentials.json</strong>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">5</span>
+                <span class="emoji">📋</span>
+                Создать Google таблицу
+            </div>
+            <div class="link-box">
+                <a href="https://docs.google.com/spreadsheets/create" target="_blank" class="link" id="link5">https://docs.google.com/spreadsheets/create</a>
+                <button class="copy-btn" onclick="copyLink('link5', this)">Копировать</button>
+            </div>
+            <div class="instruction">
+                → После создания таблицы:<br>
+                → Откройте <strong>credentials.json</strong> и скопируйте <strong>client_email</strong><br>
+                → В таблице нажмите "Настроить доступ" и добавьте этот email с правами <strong>Редактор</strong>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>✅ После получения ключа поместите <strong>credentials.json</strong> в папку проекта</p>
+            <p>🧪 Проверьте работу: <code>python test_google_sheets.py</code></p>
+        </div>
+    </div>
+
+    <script>
+        function copyLink(linkId, button) {
+            const link = document.getElementById(linkId).textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Скопировано!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                alert('Ошибка копирования: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>
+

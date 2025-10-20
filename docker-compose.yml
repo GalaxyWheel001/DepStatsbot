@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # PostgreSQL база данных
+  postgres:
+    image: postgres:15-alpine
+    container_name: deposit_bot_db
+    environment:
+      POSTGRES_DB: deposit_bot
+      POSTGRES_USER: bot_user
+      POSTGRES_PASSWORD: bot_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bot_user -d deposit_bot"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Telegram бот
+  bot:
+    build: .
+    container_name: deposit_bot
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - ADMIN_IDS=${ADMIN_IDS}
+      - DATABASE_URL=postgresql+asyncpg://bot_user:bot_password@postgres:5432/deposit_bot
+      - UPLOAD_DIR=/app/uploads
+      - MAX_FILE_SIZE=10485760
+      - RATE_LIMIT_PER_MINUTE=1
+      - MAX_APPLICATIONS_PER_DAY=3
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    command: >
+      sh -c "
+        python init_db.py &&
+        python main.py
+      "
+
+  # Nginx для webhook (опционально)
+  nginx:
+    image: nginx:alpine
+    container_name: deposit_bot_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - bot
+    restart: unless-stopped
+    profiles:
+      - webhook
+
+volumes:
+  postgres_data:
